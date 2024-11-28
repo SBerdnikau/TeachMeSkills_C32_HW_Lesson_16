@@ -16,7 +16,7 @@ import java.util.*;
 public class ApplicationRunner {
     public static void main(String[] args) {
         Set<String> passportNumbers = PassportGenerator.generatePassportNumbers();
-        Set<Student> students = new HashSet<>();
+        Set<Student> students = new LinkedHashSet<>();
 
         students.add(new Student("Dmitriy"));
         students.add(new Student("Ilya"));
@@ -36,12 +36,12 @@ public class ApplicationRunner {
 
         Map<String, Student> passportStudentMap = new HashMap<>();
 
+        Iterator<String> passportIterator = passportNumbers.iterator();
         Iterator<Student> studentIterator = students.iterator();
-        for (String passport : passportNumbers){
-            if (studentIterator.hasNext()){
-                Student student = studentIterator.next();
-                passportStudentMap.put(passport,student);
-            }
+        while (passportIterator.hasNext() && studentIterator.hasNext()  ){
+            String passport = passportIterator.next();
+            Student student = studentIterator.next();
+            passportStudentMap.put(passport, student);
         }
 
         passportStudentMap.forEach( (numPassport, student) -> System.out.println("Passport: " + numPassport + ", name: " + student.getName())  ) ;
